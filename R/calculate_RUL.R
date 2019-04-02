@@ -15,7 +15,7 @@
 #'
 #' @export
 
-calculate_rul <- function(df) {
-  df <- df %>% dplyr::group_by(id) %>% dplyr::mutate(RUL = max(timestamp) - timestamp) %>% ungroup
+calculate_RUL <- function(df) {
+  df <- df %>% dplyr::group_by(id) %>% dplyr::mutate(RUL = max(timestamp) - timestamp) %>% ungroup()
   return(df)
 }

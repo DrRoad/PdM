@@ -1,22 +1,13 @@
-#' Create model
-#'
-#' Generates RUL colum for train_data
-#'
-#' @aliases calculate_rul
-#' @param df data frame
-#' @return a list with the following variables:
-#' @details load input data
-#'
-#'
-#'
-#' @author Cuong Sai and Maxim Shcherbakov.
-#'
-#' @keywords data
-#'
 #' @export
+create_model <- function(formula, df, method, metric, allowParallel=TRUE,...){
 
-# formula <- as.formula(paste(paste("RUL~"), paste(names(train_df[,1:18]), collapse = "+")))
-
-create_model <- function(df, formula, m,...) {
-  fit <- caret::train(formula, data=df, method=m,...)
+  m_list <- list()
+  for (i in 1: length(method)) {
+    m_list[[i]] <- train(formula, data=df, method= method[i], metric = metric, allowParallel=allowParallel,...)
+  }
+  #names(m_list) <- method
+  results <- resamples(m_list)
+  a <- summary(results)
+  b <- dotplot(results)
+  return(list(a,b))
 }

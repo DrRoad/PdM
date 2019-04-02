@@ -1,27 +1,46 @@
-#' Data visualization for predictive maintenance
+#' Training and Test data Visualization for predictive maintenance
 #'
-#' The function for plotting of ggplot objects.
+#' The function for plotting of ggplot objects. For more details about the
+#' graphical parameter arguments, use \code{?visualize_data}
 #'
 #' @aliases visualize_data
-#' @param df dataframe containing multivariate time series data
-#' @param id_engine engine_id for the data of which to be shown
-#' @param cols specisly cols
-#' @param type what type of plot should be drawn. Possible types are: "p"-for points,
-#' "l"-for lines, "h"-for histogram
-#' @return a ggplot object containing the different graphs.
-#'
-#' @details Test
-#'
-#'
+#' @param df dataframe containing multiple multivariate time series formatted using
+#' the specific Table Schema, use \code{showDF()} to display schema specification details.
+#' @param id_engine id for the input data to be shown.
+#' @param cols for the variable names of the input data to be shown.
+#' @param type what type of plot should be drawn. Possible types are:
+#' \describe{
+#'   \item{l:}{for line graphs}
+#'   \item{p:}{for point graphs (scatter plots)}
+#'   \item{b:}{for both line and point graphs}
+#'   \item{bp:}{for box plots}
+#'   \item{h:}{for histogram}
+#'   \item{hf:}{for histograms of the healthy vs failing sensor Values}
+#' }
+#' @return a ggplot object containing the subgraphs of each variable from the input data.
 #'
 #' @author Cuong Sai and Maxim Shcherbakov.
+#' @seealso \code{\link{showDF}}, \code{\link{validate_data}},\code{\link{summarize_data}}
 #'
 #' @keywords data visualization
+#'
+#' @examples
+#' visualize_data(train_data, id_engine = 1:10, type = "l")
+#' visualize_data(train_data, id_engine = 1:10, cols = c("s1", "s2", "S8", "c2"), type = "p")
+#' visualize_data(train_data, id_engine = 1:20, type = "bp")
+#' visualize_data(train_data, id_engine = 1:100, type = "h")
+#' visualize_data(train_data, id_engine = 1:100, type = "hp", n_step = 30)
 #'
 #' @export
 
 visualize_data <- function(df, id_engine, cols = NULL, type = "l", n_step = 20) {
 
+  if (!validate_data(df)) {
+    stop("Check the column names of input data frame. The input data needed in the form of
+         a data frame containing columns named 'id', 'timestamp', starts_with 's' for sensors or 'c' for conditions.")
+  }
+
+  # subset data
   df <- df %>% dplyr::filter(id %in% id_engine)
   df$id <- factor(df$id)
 
@@ -30,6 +49,7 @@ visualize_data <- function(df, id_engine, cols = NULL, type = "l", n_step = 20) 
     df_trans <- df %>% dplyr::select(cols)
     df <- dplyr::bind_cols(df_origin, df_trans)
   }
+
   # Create ggplot
   if (type %in% c("l", "p", "b")){
     df <- df %>% tidyr::gather(key = "s", value = measurement, -id, -timestamp)
@@ -59,6 +79,7 @@ visualize_data <- function(df, id_engine, cols = NULL, type = "l", n_step = 20) 
   }
 
  if (type == "hf"){
+   # prepare data
     df1 <- df %>%  group_by(id) %>% filter(timestamp <= n_step) %>% ungroup
     df1$class <- "healthy"
     df1 <- df1 %>% tidyr::gather(key = "s", value = measurement, -id, -timestamp, -class)
@@ -68,11 +89,11 @@ visualize_data <- function(df, id_engine, cols = NULL, type = "l", n_step = 20) 
     df3 <- dplyr::bind_rows(df1, df2)
     df3$s <- factor(df3$s, levels=unique(as.character(df3$s)))
     #df3 <- dplyr::filter(df3, s == "s3")
-    p <- ggplot2:: ggplot(df3, mapping = aes(x=measurement, fill = class, color = class)) +
+    p <- ggplot2:: ggplot(df3, mapping = ggplot2::aes(x=measurement, fill = class, color = class)) +
       ggplot2::geom_histogram(alpha=0.4, bins = 30) +
       viridis::scale_color_viridis(discrete = TRUE)+
-      facet_wrap(~ s, scales = "free", ncol = 4) +
-      ggtitle("Healthy vs Failing Sensor Values")+
+      ggplot2::facet_wrap(~ s, scales = "free", ncol = 4) +
+      ggplot2::ggtitle("Healthy vs Failing Sensor Values")+
       ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
   }
 
@@ -108,6 +129,5 @@ visualize_data <- function(df, id_engine, cols = NULL, type = "l", n_step = 20) 
      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
  }
 
-
-print(p)
+return(p)
 }

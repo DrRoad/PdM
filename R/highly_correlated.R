@@ -1,5 +1,6 @@
 # Remove Redundant Features
 # ensure the results are repeatable
+#' @export
 remove_rf <- function(df, cf = 0.75) {
 
   # calculate correlation matrix

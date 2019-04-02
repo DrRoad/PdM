@@ -18,7 +18,7 @@
 #'
 #' @export
 
-rul_visualization <- function(df, id_engine) {
+visualize_RUL <- function(df, id_engine, type = "bar") {
     df <- df %>% filter(id %in% id_engine)
     df$id <- as.factor(df$id)
     # Plot
@@ -32,6 +32,18 @@ rul_visualization <- function(df, id_engine) {
     # ggplot2::xlab("Time (Cycles)") +
     # ggplot2::ylab("Measurements") +
     # ggplot2::theme(plot.title = element_text(hjust = 0.5))
+
+    if (type == "h") {
+    RUL <- df %>% select(id, timestamp, RUL) %>% group_by(id) %>%
+      summarize(rul = RUL[1])
+    nbins = nclass.FD(RUL$rul)
+
+    p <- ggplot2:: ggplot(RUL, aes(x = rul, y = ..density..)) +
+      geom_histogram(col = "red", fill = "green", alpha = 0.2, bins = nbins) +
+      geom_density(col = "red", size = 1)+
+      ggtitle("Distribution of RUL")+
+      theme(plot.title = element_text(hjust = 0.5))
+    }
 
   print(p)
 }

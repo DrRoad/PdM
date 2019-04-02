@@ -4,7 +4,8 @@
 \name{PdM}
 \alias{PdM}
 \alias{PdM-package}
-\title{\code{PdM} package}
+\title{R package for predictive maintenance}
 \description{
-Forecast Evaluation and Visualization
+Contains tools to analyze, visualize multiple multivariate time series,
+ explore failure modes, and  build predictive maintenance models for IoT.
 }

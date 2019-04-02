@@ -1,6 +1,7 @@
-#' \code{PdM} package
+#' R package for predictive maintenance
 #'
-#' Forecast Evaluation and Visualization
+#'  Contains tools to analyze, visualize multiple multivariate time series,
+#'  explore failure modes, and  build predictive maintenance models for IoT.
 #'
 #'
 #' @docType package
@@ -8,9 +9,17 @@
 #' @import ggplot2
 #' @import dplyr
 #' @import viridis
+#' @import skimr
 #' @importFrom magrittr %>%
+#' @importFrom keras %<-%
+#'
+#'
 NULL
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
 if(getRversion() >= "2.15.1")  utils::globalVariables()
+# see https://github.com/forvis/PdM
+
+
+
 
