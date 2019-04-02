@@ -1,6 +1,6 @@
 #' RUL visualization
 #'
-#' Generates data_visualization accuracy tables and plots.
+#' Generates data_visualization
 #'
 #' @aliases data_visualization
 #' @param df data

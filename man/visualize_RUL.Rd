@@ -18,7 +18,7 @@ visualize_RUL(df, id_engine, type = "bar")
 a list with the following variables
 }
 \description{
-Generates data_visualization accuracy tables and plots.
+Generates data_visualization
 }
 \details{
 load input data

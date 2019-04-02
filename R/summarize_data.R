@@ -27,16 +27,16 @@ summarize_data <- function(df) {
 
     # Create statistics
     var <- colnames(df)
-    complete <- apply(train_data, 2, function(x){length(x)})
-    missing <- apply(train_data, 2, function(x){sum(is.na(x))})
+    complete <- apply(df, 2, function(x){length(x)})
+    missing <- apply(df, 2, function(x){sum(is.na(x))})
 
-    mean <- apply(train_data, 2, function(x){round(mean(x, na.rm = TRUE), digits = 3)})
-    type <- apply(train_data, 2, function(x){typeof(x)})
-    median <- apply(train_data, 2, function(x){round(median(x, na.rm = TRUE), digits = 3)})
-    min <- apply(train_data, 2, function(x){round(min(x, na.rm = TRUE), digits = 3)})
-    max <- apply(train_data, 2, function(x){round(max(x, na.rm = TRUE), digits = 3)})
-    Qu25 <- apply(train_data, 2, function(x){round(quantile(x, 0.25), digits = 3)})
-    Qu75 <- apply(train_data, 2, function(x){round(quantile(x, 0.75), digits = 3)})
+    mean <- apply(df, 2, function(x){round(mean(x, na.rm = TRUE), digits = 3)})
+    type <- apply(df, 2, function(x){typeof(x)})
+    median <- apply(df, 2, function(x){round(median(x, na.rm = TRUE), digits = 3)})
+    min <- apply(df, 2, function(x){round(min(x, na.rm = TRUE), digits = 3)})
+    max <- apply(df, 2, function(x){round(max(x, na.rm = TRUE), digits = 3)})
+    Qu25 <- apply(df, 2, function(x){round(quantile(x, 0.25, na.rm = TRUE), digits = 3)})
+    Qu75 <- apply(df, 2, function(x){round(quantile(x, 0.75, na.rm = TRUE), digits = 3)})
 
     #  not to use exponential notation
     mean <- format(mean, scientific = FALSE)

@@ -1,21 +1,22 @@
-#' RUL calculation
+#' Remaining useful life calculation
 #'
-#' Generates RUL colum for train_data
+#' Generates the remaining useful life (rul) colum for training data
 #'
 #' @aliases calculate_rul
-#' @param df data frame
-#' @return a list with the following variables:
-#' @details load input data
+#' @param df a training dataframe containing multiple multivariate time series formatted using
+#' the specific Table Schema, use \code{showDF()} to display schema specification details.
+#' @return a new training data frame with rul column
 #'
 #'
 #'
 #' @author Cuong Sai and Maxim Shcherbakov.
 #'
-#' @keywords data
-#'
+#' @keywords Remaining useful life
+#' @examples
+#' train_data <- calculate_rul(train_data)
 #' @export
 
-calculate_RUL <- function(df) {
-  df <- df %>% dplyr::group_by(id) %>% dplyr::mutate(RUL = max(timestamp) - timestamp) %>% ungroup()
+calculate_rul <- function(df) {
+  df <- df %>% dplyr::group_by(id) %>% dplyr::mutate(rul = max(timestamp) - timestamp) %>% ungroup()
   return(df)
 }
