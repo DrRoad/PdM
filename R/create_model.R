@@ -1,5 +1,15 @@
+# define training control
+# trainControl <- trainControl(method="cv", number=10, repeats = 3)
+# evaluate the model
+# fit <- train(Species~., data=iris, trControl=trainControl, method="nb")
+# display the results
+# evaluate the model
+# fit <- train(Species~., data=iris, trControl=trainControl, method="nb")
+# display the results
+# print(fit)
 #' @export
-create_model <- function(formula, df, method, metric, allowParallel=TRUE,...){
+#'
+create_model <- function(formula, df, method, metric, allowParallel=FALSE,...){
 
   m_list <- list()
   for (i in 1: length(method)) {
@@ -11,3 +21,6 @@ create_model <- function(formula, df, method, metric, allowParallel=TRUE,...){
   b <- dotplot(results)
   return(list(a,b))
 }
+
+
+

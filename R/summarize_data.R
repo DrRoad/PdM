@@ -31,12 +31,13 @@ summarize_data <- function(df) {
     missing <- apply(df, 2, function(x){sum(is.na(x))})
 
     mean <- apply(df, 2, function(x){round(mean(x, na.rm = TRUE), digits = 3)})
-    type <- apply(df, 2, function(x){typeof(x)})
+    type <- apply(df, 2, function(x){class(x)})
     median <- apply(df, 2, function(x){round(median(x, na.rm = TRUE), digits = 3)})
     min <- apply(df, 2, function(x){round(min(x, na.rm = TRUE), digits = 3)})
     max <- apply(df, 2, function(x){round(max(x, na.rm = TRUE), digits = 3)})
     Qu25 <- apply(df, 2, function(x){round(quantile(x, 0.25, na.rm = TRUE), digits = 3)})
     Qu75 <- apply(df, 2, function(x){round(quantile(x, 0.75, na.rm = TRUE), digits = 3)})
+    skew <- apply(df, 2, function(x) {round(e1071::skewness(x), digits = 3)})
 
     #  not to use exponential notation
     mean <- format(mean, scientific = FALSE)
@@ -48,7 +49,7 @@ summarize_data <- function(df) {
 
 
     # Create output data frame
-    df_out <- data.frame(variable = var, type, complete, missing, min, quartile_25 = Qu25, mean, median,quartile_75 = Qu75,max)
+    df_out <- data.frame(variable = var, type, complete, missing, min, quartile_25 = Qu25, mean, median,quartile_75 = Qu75,max, skew)
     row.names(df_out) <- NULL
     # print
     cat("+++ Summary statistics +++\n")

@@ -6,12 +6,12 @@ tabpanel.report = fluidPage(theme = shinytheme("united"),
         selectInput("report.format", "",
           choices = c("PDF", "HTML"), selected = "PDF"),
         menuItem("title"),
-        textInput("report.title", label = "", value = "shinyMlr report"),
+        textInput("report.title", label = "", value = "PdM report"),
         menuItem("subtitle"),
         textInput("report.subtitle", label = "",
-          value = "Your data analysis and machine learning experiment summary"),
+          value = "Your data analysis and predictive maintenance experiment summary"),
         menuItem("authors"),
-        textInput("report.authors", label = "", value = "mlr organization"),
+        textInput("report.authors", label = "", value = "Cuong Sai, Maxim Shcherbakov"),
         div(align = "center", downloadButton("report", "Generate report"))
       )
     ),
@@ -26,7 +26,7 @@ tabpanel.report = fluidPage(theme = shinytheme("united"),
         makeReportConfigUI("Task", "task",
           # passage = "Here's your task:"
         ),
-        makeReportConfigUI("Learners", "learners",
+        makeReportConfigUI("Models", "learners",
           # passage = "You constructed these learners:"
         ),
         makeReportConfigUI("Tuning", "tuning",
@@ -34,11 +34,9 @@ tabpanel.report = fluidPage(theme = shinytheme("united"),
         ),
         makeReportConfigUI("Train and Predict", "modelling",
           # passage = "Summary of modelling section:"
-        ),
-        makeReportConfigUI("Benchmark", "benchmark",
-          # passage = "Look what bmr did:"
+        )
         )
       )
     )
   )
-)
+

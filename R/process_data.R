@@ -3,7 +3,7 @@
 #' The function for data transformation. For more details about the
 #' parameter arguments, use \code{?transfrom_data}
 #'
-#' @aliases transfrom_data
+#' @aliases process_data
 #' @param train_df the training dataframe containing multiple multivariate time series formatted using
 #' the specific Table Schema, use \code{showDF()} to display schema specification details.
 #' @param test_df the test dataframe containing multiple multivariate time series formatted using
@@ -21,6 +21,7 @@
 #'   \item{pca:}{transform data to the principal components.}
 #'   \item{ica:}{transform data to the independent components.}
 #'   \item{spatialSign:}{project data onto a unit circle.}
+#'   \item{c("center", "scale"):}{standardize data}
 #'
 #' }
 #' @return Returns the transformed training and test datasets
@@ -39,7 +40,7 @@
 
 
 #' @export
-transfrom_data <- function(train_df, test_df, method = "range"){
+process_data <- function(train_df, test_df, method = "range"){
 
   # prepare data for transforming
   # for training data

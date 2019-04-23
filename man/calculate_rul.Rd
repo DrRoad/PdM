@@ -14,7 +14,7 @@ the specific Table Schema, use \code{showDF()} to display schema specification d
 a new training data frame with rul column
 }
 \description{
-Generates the remaining useful life (rul) colum for training data
+Generates the remaining useful life (RUL) colum for training data
 }
 \examples{
 train_data <- calculate_rul(train_data)

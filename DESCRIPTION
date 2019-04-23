@@ -20,6 +20,10 @@ Imports:
     dplyr,
     magrittr,
     skimr,
+    corrplot, 
+    zeallot,
+    e1071,
+    caret,
     viridis
 URL: https://github.com/forvis/PdM
 BugReports: https://github.com/forvis/PdM/issues

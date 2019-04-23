@@ -10,8 +10,11 @@
 #' @import dplyr
 #' @import viridis
 #' @import skimr
+#' @import zeallot
+#' @import magrittr
+#' @import caret
 #' @importFrom magrittr %>%
-#' @importFrom keras %<-%
+#' @importFrom zeallot %<-%
 #'
 #'
 NULL

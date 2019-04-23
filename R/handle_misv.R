@@ -73,6 +73,9 @@ handle_misv <- function(df, method) {
     if (length(row_na) != 0) {
       message(paste(paste("The following rows containing missing values:"),  paste(row_na, collapse = ", ")))
     }
+    for(i in 1:ncol(df)) {
+      data[ , i][is.na(df[ , i])] <- mean(df[ , i], na.rm = TRUE)
+    }
   }
 # Median
   if (method == "knn"){
@@ -81,6 +84,8 @@ handle_misv <- function(df, method) {
     if (length(row_na) != 0) {
       message(paste(paste("The following rows containing missing values:"),  paste(row_na, collapse = ", ")))
     }
+    pPknnI <- caret::preProcess(df, method = 'knnImpute')
+    df <- predict(pPknnI, df)
 
   }
 
@@ -90,6 +95,21 @@ handle_misv <- function(df, method) {
     row_na <- which(!complete.cases(df))
     if (length(row_na) != 0) {
       message(paste(paste("The following rows containing missing values:"),  paste(row_na, collapse = ", ")))
+    }
+    # Create function for mode calculation
+    Mode <- function (x, na.rm) {
+      xtab <- table(x)
+      xmode <- names(which(xtab == max(xtab)))
+      if (length(xmode) > 1) xmode <- ">1 mode"
+      return(xmode)
+    }
+
+    for (var in 1:ncol(df)) {
+      if (class(df[,var])=="numeric") {
+        df[is.na(df[,var]),var] <- mean(df[,var], na.rm = TRUE)
+      } else if (class(df[,var]) %in% c("character", "factor")) {
+        df[is.na(df[,var]),var] <- Mode(df[,var], na.rm = TRUE)
+      }
     }
   }
 

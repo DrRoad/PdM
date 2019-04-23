@@ -6,7 +6,7 @@
 output$import.ui = renderUI({
   type = input$import.type;
   if (is.null(type))
-    type = "examples"
+    type = "CSV"
   makeImportSideBar(type)
 })
 
